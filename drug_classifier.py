@@ -895,7 +895,8 @@ drug_list = [
     "Zotepine"
 ]
 
-client = Groq(api_key="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")
+# client = Groq(api_key="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")
+client = Groq(api_key="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")
 
 class DrugQuery(BaseModel):
     drug_name: str
@@ -942,15 +943,10 @@ async def enhance_interaction_data(drug1, drug2, classification1, classification
     """Use LLM to enhance and structure the interaction data for better readability"""
     
     system_message = (
-        "You are a pharmacology expert specializing in drug interactions. "
-        "Analyze the provided drug interaction information and respond with a well-structured, clear explanation. "
-        "Include the following sections:\n"
-        "1. SUMMARY: A one-sentence summary of the interaction\n"
-        "2. MECHANISM: How the drugs interact at a biochemical level\n"
-        "3. CLINICAL SIGNIFICANCE: How important this interaction is (minor, moderate, major)\n"
-        "4. RECOMMENDATIONS: What healthcare providers should do\n"
-        "Format your response using these exact headings and keep it concise but informative."
-    )
+    "You are a pharmacology expert specializing in drug interactions. "
+    "Provide a brief, clear explanation of the interaction in one paragraph, directly stating the clinical relevance and mechanism."
+    "Keep it short and concise."
+)
     
     user_message = (
         f"Drug 1: {drug1} (Class: {classification1})\n"
@@ -1029,5 +1025,4 @@ async def get_drug_interaction(payload: DrugInteractionQuery):
                 "classification": drug2_class["classification"]
             },
             "interaction": None,
-            "message": "No interaction data found for these drugs"
         } 
