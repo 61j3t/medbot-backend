@@ -895,8 +895,11 @@ drug_list = [
     "Zotepine"
 ]
 
+client = Groq(api_key="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")
+# client = Groq(api_key="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")
 # client = Groq(api_key="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")
-client = Groq(api_key="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")
+# client = Groq(api_key="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")
+
 
 class DrugQuery(BaseModel):
     drug_name: str
@@ -948,10 +951,21 @@ async def enhance_interaction_data(drug1, drug2, classification1, classification
     "Keep it short and concise."
 )
     
+    # Limit the content to avoid sending too much data to the LLM
+    max_word_count = 700
+    original_content = interaction_data['content']
+    words = original_content.split()
+    
+    if len(words) > max_word_count:
+        limited_words = words[:max_word_count]
+        limited_content = " ".join(limited_words) + "... [content truncated]"
+    else:
+        limited_content = original_content
+    
     user_message = (
         f"Drug 1: {drug1} (Class: {classification1})\n"
         f"Drug 2: {drug2} (Class: {classification2})\n\n"
-        f"Interaction Information:\n{interaction_data['content']}"
+        f"Interaction Information:\n{limited_content}"
     )
     
     try:
