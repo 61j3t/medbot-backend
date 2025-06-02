@@ -895,10 +895,7 @@ drug_list = [
     "Zotepine"
 ]
 
-client = Groq(api_key="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")
-# client = Groq(api_key="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")
-# client = Groq(api_key="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")
-# client = Groq(api_key="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")
+client = Groq(api_key="PUT_YOUR_API_KEY_HERE")
 
 
 class DrugQuery(BaseModel):
